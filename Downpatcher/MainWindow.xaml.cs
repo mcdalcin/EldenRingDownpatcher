@@ -381,6 +381,7 @@ namespace Downpatcher {
             if (_availableVersions == null) {
                 _console.Output("ERROR: Cannot determine the installed version" +
                     "without versioning metadata. Aborting.");
+                return "";
             }
             foreach (var version in _availableVersions.versions) {
                 if (version.size == exeSize) {
@@ -417,7 +418,7 @@ namespace Downpatcher {
             string command =
                 "dotnet.exe \"" + _depotDownloaderInstallPath
                 + "\\DepotDownloader.dll\""
-                + " -app 782330"
+                + " -app 1245620"
                 + " -max-servers 60"
                 + " -max-downloads 16"
                 + " -validate"
@@ -589,10 +590,7 @@ namespace Downpatcher {
             string username = tbUsername.Text;
             string password = pbPassword.Password;
 
-            string[] depotIds = {
-                "782332", "782333", "782334", "782335", "782336", "782337", "782338",
-                "782339"
-            };
+            string[] depotIds = {"1245621", "1245624"};
 
             // Run DepotDownloader on a new thread to not block the UI-thread. 
             bool downloadAllFiles = cbDownloadAllFiles.IsChecked == true;
