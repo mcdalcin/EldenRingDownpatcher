@@ -29,20 +29,21 @@ namespace Downpatcher {
         private const string DEPOT_DOWNLOADER_AUTH_CODE_REGEX_STRING =
             "Please enter the authentication code sent to your email address";
 
-        private const string DOOM_ETERNAL_EXE_STRING = "DOOMEternalx64vk.exe";
-        private const string DOOM_ETERNAL_DATA_BASE_URL =
-            "https://raw.githubusercontent.com/mcdalcin/DoomEternalDownpatcher"
+        private const string GAME_EXECUTABLE_STRING = "eldenring.exe";
+        private const string GAME_DATA_BASE_URL =
+            "https://raw.githubusercontent.com/mcdalcin/EldenRingEternalDownpatcher"
                 + "/master/data/";
-        private const string DOOM_ETERNAL_VERSION_URL =
-            DOOM_ETERNAL_DATA_BASE_URL + "versions.json";
+        private const string GAME_VERSION_DATA_URL =
+            GAME_DATA_BASE_URL + "versions.json";
+        private const string GAME_NAME = "ELDEN RING";
 
         private const string DOWNPATCHER_RELEASE_URL =
-            "https://api.github.com/repos/mcdalcin/DoomEternalDownpatcher/releases";
+            "https://api.github.com/repos/mcdalcin/EldenRingDownpatcher/releases";
 
-        private string _doomEternalPath = "";
-        private string _doomEternalDetectedVersion = "";
+        private string _gamePath = "";
+        private string _gameDetectedVersion = "";
 
-        private volatile string _doomEternalDownpatchFolder = "";
+        private volatile string _downpatchFolder = "";
         private volatile string _depotDownloaderInstallPath = "";
 
         private Versions _availableVersions;
@@ -58,18 +59,18 @@ namespace Downpatcher {
             DataContext = _console;
             CheckForUpdates();
             _availableVersions = InitializeAvailableVersions();
-            _doomEternalPath = InitializeDoomRootPath();
-            _doomEternalDetectedVersion = InitializeDoomVersion();
-            InitializeDoomDownpatchVersions();
+            _gamePath = InitializeGameRootPath();
+            _gameDetectedVersion = DetectInstalledVersion();
+            InitializeDownpatchVersions();
             InitializeDepotDownloader();
             cbReportErrors.IsChecked = 
                 Properties.Settings.Default.AutomaticallyReportExceptions;
             cbDownloadAllFiles.IsChecked = Properties.Settings.Default.DownloadAllFiles;
 
-            // Initialize the default DOOM Eternal downpatch folder.
-            _doomEternalDownpatchFolder = 
+            // Initialize the default downpatch folder.
+            _downpatchFolder = 
                 Directory.GetCurrentDirectory() + @"\DOWNPATCH_FILES";
-            lSelectedFolder.Content = new Run(_doomEternalDownpatchFolder);
+            lSelectedFolder.Content = new Run(_downpatchFolder);
         }
 
         /** Checks for updates to the downpatcher and alerts the user if found. */
@@ -107,9 +108,9 @@ namespace Downpatcher {
         }
 
         /** 
-         * Returns the DOOM Eternal root folder path or an empty string if not found.
+         * Returns the games root folder path or an empty string if not found.
          */
-        private string InitializeDoomRootPath() {
+        private string InitializeGameRootPath() {
             // Get steam base path from registry.
             RegistryKey localKey =
                 RegistryKey.OpenBaseKey(
@@ -119,16 +120,16 @@ namespace Downpatcher {
                 return "";
             }
             string steamPath = localKey.GetValue("InstallPath").ToString();
-            string doomEternalPath = steamPath + @"\steamapps\common\DOOMEternal";
-            // Check that the DOOM Eternal folder exists.
-            return ValidateDoomRootPath(doomEternalPath);
+            string gamePath = steamPath + @"\steamapps\common\ELDEN RING\Game";
+            // Check that the folder exists.
+            return ValidateGameRootPath(gamePath);
         }
 
-        private string ValidateDoomRootPath(string path) {
-            // Check that the DOOM Eternal folder exists.
+        private string ValidateGameRootPath(string path) {
+            // Check that the game's folder exists.
             tbRootPath.Inlines.Clear();
             if (Directory.Exists(path)) {
-                _console.Output("Successfully found DOOM Eternal root folder!");
+                _console.Output("Successfully found root folder!");
                 tbRootPath.Inlines.Add(new Bold(new Run("Root folder found: ")) {
                     Foreground =
                         new SolidColorBrush(
@@ -138,59 +139,56 @@ namespace Downpatcher {
                 return path;
             } else {
                 _console.Output(
-                    "ERROR: Could not find DOOM Eternal root folder! Please " +
-                    "select it manually.");
+                    "ERROR: Could not find root folder! Please select it manually.");
                 spRootPath.Visibility = Visibility.Hidden;
-                spSelectDoomFolder.Visibility = Visibility.Visible;
+                spSelectGameFolder.Visibility = Visibility.Visible;
                 return "";
             }
         }
 
         /** 
-         * Returns the installed DOOM Eternal version or an empty string if unable to
-         * detect it. _doomEternalPath should be set to the DOOM Eternal root path
-         * before calling this function.
+         * Returns the installed version or an empty string if unable to detect it. 
+         * _gamePath should be set to the game's root path before calling this function.
          */
-        private string InitializeDoomVersion() {
-            string doomEternalExePath =
-                _doomEternalPath + @"\" + DOOM_ETERNAL_EXE_STRING;
+        private string DetectInstalledVersion() {
+            string gameExecutablePath =
+                _gamePath + @"\" + GAME_EXECUTABLE_STRING;
 
-            if (!File.Exists(doomEternalExePath)) {
+            if (!File.Exists(gameExecutablePath)) {
                 _console.Output(
-                    "ERROR: DOOM Eternal executable not found. Please select " +
-                    "your DOOM Eternal root folder containing the DOOM Eternal " +
-                    "executable (DOOMEternalx64vk.exe).");
+                    "ERROR: " + GAME_NAME + " executable not found. Please select " +
+                    "the root folder containing the " + GAME_NAME + " executable (" + 
+                    GAME_EXECUTABLE_STRING + ").");
                 spRootPath.Visibility = Visibility.Hidden;
-                spSelectDoomFolder.Visibility = Visibility.Visible;
+                spSelectGameFolder.Visibility = Visibility.Visible;
                 return "";
             }
 
-            long exeSize = new FileInfo(doomEternalExePath).Length;
-            string doomVersion = DetermineDoomVersion(exeSize);
+            long exeSize = new FileInfo(gameExecutablePath).Length;
+            string gameVersion = DetermineGameVersion(exeSize);
 
             tbVersion.Inlines.Clear();
-            if (doomVersion.Length != 0) {
+            if (gameVersion.Length != 0) {
                 _console.Output(
-                    "Successfully detected installed DOOM Eternal version: "
-                        + doomVersion);
+                    "Successfully detected installed version: " + gameVersion);
                 tbVersion.Inlines.Add(
-                    new Bold(new Run("Installed DOOM Eternal version: ") {
+                    new Bold(new Run("Installed " + GAME_NAME + " version: ") {
                         Foreground =
                             new SolidColorBrush(
                                 (Color)ColorConverter.ConvertFromString("#C7F464"))
                     }));
-                tbVersion.Inlines.Add(new Run(doomVersion));
+                tbVersion.Inlines.Add(new Run(gameVersion));
                 spRootPath.Visibility = Visibility.Visible;
-                spSelectDoomFolder.Visibility = Visibility.Hidden;
+                spSelectGameFolder.Visibility = Visibility.Hidden;
             } else {
                 _console.Output(
-                    "ERROR: Unable to detect installed DOOM Eternal version. " +
+                    "ERROR: Unable to detect installed " + GAME_NAME + " version. " +
                     "Please report this error to the speedrunning discord!");
                 spRootPath.Visibility = Visibility.Visible;
-                spSelectDoomFolder.Visibility = Visibility.Hidden;
+                spSelectGameFolder.Visibility = Visibility.Hidden;
                 return "";
             }
-            return doomVersion;
+            return gameVersion;
         }
 
         /** 
@@ -270,19 +268,19 @@ namespace Downpatcher {
             }
         }
 
-        private void InitializeDoomDownpatchVersions() {
+        private void InitializeDownpatchVersions() {
             // Clear any currently set downpatch versions.
             cbDownpatchVersion.Items.Clear();
 
             bool downloadAllFilesChecked = cbDownloadAllFiles.IsChecked == true;
-            if (_doomEternalDetectedVersion.Equals("") && !downloadAllFilesChecked) {
+            if (_gameDetectedVersion.Equals("") && !downloadAllFilesChecked) {
                 return;
             }
 
             // Only include versions less than our current version unless downloading all files.
             int count = 0;
             foreach (var version in _availableVersions.versions) {
-                if (!downloadAllFilesChecked && _doomEternalDetectedVersion.Equals(version.name)) {
+                if (!downloadAllFilesChecked && _gameDetectedVersion.Equals(version.name)) {
                     break;
                 }
                 cbDownpatchVersion.Items.Add(version.name);
@@ -329,8 +327,8 @@ namespace Downpatcher {
                 cbDownpatchVersion.SelectedItem != null &&
                 tbUsername.Text.Length != 0 &&
                 pbPassword.Password.Length != 0 &&
-                (cbDownloadAllFiles.IsChecked == true || _doomEternalDetectedVersion.Length != 0) &&
-                _doomEternalDownpatchFolder.Length != 0 &&
+                (cbDownloadAllFiles.IsChecked == true || _gameDetectedVersion.Length != 0) &&
+                _downpatchFolder.Length != 0 &&
                 _depotDownloaderInstallPath.Length != 0 &&
                 _depotDownloaderProcess == null;
         }
@@ -347,7 +345,7 @@ namespace Downpatcher {
                 string files;
                 try {
                     files = webClient.DownloadString(
-                        DOOM_ETERNAL_DATA_BASE_URL + versionName + ".txt");
+                        GAME_DATA_BASE_URL + versionName + ".txt");
                 } catch (WebException e) {
                     _console.Output(
                         "ERROR: Unable to download filelist for " + versionName +
@@ -366,7 +364,7 @@ namespace Downpatcher {
             using (var webClient = new WebClient()) {
                 string json = "";
                 try {
-                    json = webClient.DownloadString(DOOM_ETERNAL_VERSION_URL);
+                    json = webClient.DownloadString(GAME_VERSION_DATA_URL);
                 } catch (WebException e) {
                     _console.Output(
                         "ERROR: Unable to download versioning metadata. Please " +
@@ -379,9 +377,9 @@ namespace Downpatcher {
             }
         }
 
-        private string DetermineDoomVersion(long exeSize) {
+        private string DetermineGameVersion(long exeSize) {
             if (_availableVersions == null) {
-                _console.Output("ERROR: Cannot determine the installed DOOM version" +
+                _console.Output("ERROR: Cannot determine the installed version" +
                     "without versioning metadata. Aborting.");
             }
             foreach (var version in _availableVersions.versions) {
@@ -390,7 +388,7 @@ namespace Downpatcher {
                 }
             }
             _console.Output(
-                "ERROR: Unable to determine an installed DOOM Version. Please make" +
+                "ERROR: Unable to determine an installed version. Please make" +
                 "sure it is actually installed in the specified folder above.");
             return "";
         }
@@ -423,7 +421,7 @@ namespace Downpatcher {
                 + " -max-servers 60"
                 + " -max-downloads 16"
                 + " -validate"
-                + " -dir \"" + _doomEternalDownpatchFolder + "\"";
+                + " -dir \"" + _downpatchFolder + "\"";
 
             if (downloadAllFiles) {
                 command += " -filelist \"" + fileListPath + "\"";
@@ -549,13 +547,13 @@ namespace Downpatcher {
 
         private void StartDownpatcherButton_Click(object sender, RoutedEventArgs e) {
             _console.Output("Beginning to downpatch.");
-            if (Directory.Exists(_doomEternalDownpatchFolder)) {
+            if (Directory.Exists(_downpatchFolder)) {
                 _console.Output("Clearing out downpatch folder.");
-                Directory.Delete(_doomEternalDownpatchFolder, true);
+                Directory.Delete(_downpatchFolder, true);
             }
-            Versions.DoomVersion downpatchVersion = null;
-            List<Versions.DoomVersion> intermediateVersions =
-                new List<Versions.DoomVersion>();
+            Versions.GameVersion downpatchVersion = null;
+            List<Versions.GameVersion> intermediateVersions =
+                new List<Versions.GameVersion>();
             foreach (var version in _availableVersions.versions) {
                 // Get all versions in range (downpatchVersion, installedVersion].
                 if (downpatchVersion != null) {
@@ -609,15 +607,15 @@ namespace Downpatcher {
             }).Start();
         }
 
-        private void SelectDoomFolderButton_Click(object sender, RoutedEventArgs e) {
+        private void SelectGameFolderButton_Click(object sender, RoutedEventArgs e) {
             FolderBrowserDialog selectFolderDialog = new FolderBrowserDialog();
             selectFolderDialog.SelectedPath = Directory.GetCurrentDirectory();
             if (selectFolderDialog.ShowDialog()
                     == System.Windows.Forms.DialogResult.OK) {
-                _doomEternalPath = 
-                    ValidateDoomRootPath(selectFolderDialog.SelectedPath);
-                _doomEternalDetectedVersion = InitializeDoomVersion();
-                InitializeDoomDownpatchVersions();
+                _gamePath = 
+                    ValidateGameRootPath(selectFolderDialog.SelectedPath);
+                _gameDetectedVersion = DetectInstalledVersion();
+                InitializeDownpatchVersions();
             }
             UpdateDownpatcherButtons();
         }
@@ -633,8 +631,8 @@ namespace Downpatcher {
                         "ERROR: The selected downpatch folder must be empty.");
                     return;
                 }
-                _doomEternalDownpatchFolder = selectFolderDialog.SelectedPath;
-                lSelectedFolder.Content = _doomEternalDownpatchFolder;
+                _downpatchFolder = selectFolderDialog.SelectedPath;
+                lSelectedFolder.Content = _downpatchFolder;
             }
             UpdateDownpatcherButtons();
         }
@@ -710,7 +708,7 @@ namespace Downpatcher {
             Properties.Settings.Default.Save();
 
             if (cbDownloadAllFiles.IsChecked == true) {
-                InitializeDoomDownpatchVersions();
+                InitializeDownpatchVersions();
             }
         }
     }

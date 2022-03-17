@@ -1,12 +1,12 @@
 ﻿namespace Downpatcher {
     class Versions {
-        public class DoomVersion {
+        public class GameVersion {
             public string name;
             public long size;
             public string[] manifestIds;
         }
 
         public string depotDownloaderVersion = "";
-        public DoomVersion[] versions = new DoomVersion[0];
+        public GameVersion[] versions = new GameVersion[0];
     }
 }
