@@ -10,7 +10,6 @@
         ResizeMode="CanMinimize"
         Title="Elden Ring Steam Downpatcher" Height="350" Width="735">
     <Canvas>
-        <Image Source="Images/bg.png" Width="1400" Canvas.Left="-430" Canvas.Top="-280" Opacity=".1"></Image>
         <StackPanel Name="spRootPath" Orientation="Horizontal" Canvas.Left="10" Canvas.Top="10">
             <Border BorderThickness="1" BorderBrush="LightGray">
                 <TextBlock Name="tbRootPath" TextTrimming="WordEllipsis" Background="White" FontSize="10" Width="400" Height="14" Padding="2,1,0,0" />

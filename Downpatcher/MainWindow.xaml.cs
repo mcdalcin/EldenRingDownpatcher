@@ -428,7 +428,7 @@ namespace Downpatcher {
                 + " -validate"
                 + " -dir \"" + _downpatchFolder + "\"";
 
-            if (downloadAllFiles) {
+            if (!downloadAllFiles) {
                 command += " -filelist \"" + fileListPath + "\"";
             }
 

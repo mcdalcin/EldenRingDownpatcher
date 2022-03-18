@@ -11,7 +11,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="elden-ring-header-animated.mp4" />
     <None Remove="Images\bg.png" />
+    <None Remove="Images\elden-ring-header-animated.mp4" />
+    <None Remove="Images\elden-ring-header-animated.webm" />
     <None Remove="Images\ico.ico" />
     <None Remove="Images\info_1.PNG" />
   </ItemGroup>
@@ -27,6 +30,15 @@
     <Resource Include="Images\bg.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Content Include="elden-ring-header-animated.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\elden-ring-header-animated.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\elden-ring-header-animated.webm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Images\info_1.PNG">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
