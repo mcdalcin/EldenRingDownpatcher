@@ -72,7 +72,7 @@ To begin, edit data/versions.json and add in a new entry based on the previous v
 ```
 ##### ADJUST MANIFESTIDS FOR THE NEW VERSION
 
-The manifestIds correspond to the 8 steam depots for DOOM Eternal starting with depot 782332 and ending with depot 782339. Note that a manifest id will only change for the depot if it contained changes from the previous patch.
+The manifestIds correspond to the 2 steam depots starting with depot 782332 and ending with depot 782339. Note that a manifest id will only change for the depot if it contained changes from the previous patch.
 
 To get the new manifestIds, go to https://steamdb.info/app/782330/patchnotes/. Click on the current patch (in this example, the December 9th patch corresponds to version 4.1). Once there, go through each depot change and replace the manifestId accordingly. 
 
