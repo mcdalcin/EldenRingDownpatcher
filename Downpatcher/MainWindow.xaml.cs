@@ -19,6 +19,8 @@ using Color = System.Windows.Media.Color;
 using System.Windows.Navigation;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
+using Gameloop.Vdf;
+using Gameloop.Vdf.Linq;
 
 namespace Downpatcher {
     public partial class MainWindow : Window {
@@ -121,9 +123,32 @@ namespace Downpatcher {
                 return "";
             }
             string steamPath = localKey.GetValue("InstallPath").ToString();
-            string gamePath = steamPath + @"\steamapps\common\ELDEN RING\Game";
-            // Check that the folder exists.
-            return ValidateGameRootPath(gamePath);
+            // Search for the game root path in the main directory. Look in alternative
+            // directories as fallback.
+            string gameRootPath = "";
+            string libraryVdfPath = steamPath + @"\steamapps\libraryfolders.vdf";
+            try {
+                dynamic libraryVdf = VdfConvert.Deserialize(File.ReadAllText(libraryVdfPath));
+                VObject libraryObjects = libraryVdf.Value;
+                for (int i = 1; i < libraryObjects.Count; i++) {
+                string libraryPath = libraryVdf.Value[i].Value.path.Value;
+                    string gamePath = libraryPath + @"\steamapps\common\ELDEN RING\Game";
+                    if (DirectoryContainsGameExecutable(gamePath)) {
+                        gameRootPath = gamePath;
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                gameRootPath = steamPath + @"\steamapps\common\ELDEN RING\Game";
+                _console.Output(
+                    "ERROR: Error reading your libraryfolders.vdf file. Falling back to the default " +
+                    "folder: " + gameRootPath);
+            }
+            return ValidateGameRootPath(gameRootPath);
+        }
+
+        private bool DirectoryContainsGameExecutable(string path) {
+            return File.Exists(path + @"\" + GAME_EXECUTABLE_STRING);
         }
 
         private string ValidateGameRootPath(string path) {
@@ -642,9 +667,11 @@ namespace Downpatcher {
         private void DownpatchVersionComboBox_SelectionChanged(
             object sender, SelectionChangedEventArgs e) {
             UpdateDownpatcherButtons();
-            _console.Output(
-                "Downpatch version set to " 
-                + cbDownpatchVersion.SelectedItem.ToString());
+            if (cbDownpatchVersion.SelectedItem != null) {
+                _console.Output(
+                    "Downpatch version set to "
+                    + cbDownpatchVersion.SelectedItem.ToString());
+            }
         }
 
         /** Must be called from the UI-thread. */

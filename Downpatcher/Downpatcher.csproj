@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <None Remove="elden-ring-header-animated.mp4" />
-    <None Remove="Images\bg.png" />
     <None Remove="Images\elden-ring-header-animated.mp4" />
     <None Remove="Images\elden-ring-header-animated.webm" />
     <None Remove="Images\ico.ico" />
@@ -21,24 +20,13 @@
 
   <ItemGroup>
     <PackageReference Include="FontAwesome5" Version="2.0.8" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Gameloop.Vdf" Version="0.6.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Sentry" Version="3.0.0-alpha.11" />
     <PackageReference Include="SharpVectors" Version="1.7.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\bg.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Content Include="elden-ring-header-animated.mp4">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\elden-ring-header-animated.mp4">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\elden-ring-header-animated.webm">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Images\info_1.PNG">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

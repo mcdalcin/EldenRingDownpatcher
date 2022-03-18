@@ -6,7 +6,7 @@ public class ConsoleContent : INotifyPropertyChanged {
     private string consoleInput = string.Empty;
     private ObservableCollection<string> consoleOutput = 
         new ObservableCollection<string>() {
-            "Welcome to the DOOM Eternal Steam Downpatcher!\n" };
+            "Welcome to the Elden Ring Steam Downpatcher!\n" };
 
     private readonly ScrollViewer scroller;
 
