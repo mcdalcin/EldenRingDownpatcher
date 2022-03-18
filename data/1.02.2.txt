@@ -1,1 +1,6 @@
-
+Data0.bdt
+Data0.bhd
+base.bin
+install_script.vdf
+base.bin
+eldenring.exe
