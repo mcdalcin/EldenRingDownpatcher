@@ -602,6 +602,8 @@ namespace Downpatcher {
                     aggregatedFiles.Add(file);
                 }
             }
+            aggregatedFiles = new HashSet<String>();
+            aggregatedFiles.Add("eldenring.exe");
 
             // Write aggregated file list to output filelist.txt.
             string fileListPath = Directory.GetCurrentDirectory() + @"\filelist.txt";
