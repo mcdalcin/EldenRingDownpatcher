@@ -734,11 +734,11 @@ namespace Downpatcher {
         private void CheckBox_CheckedChanged(object sender, RoutedEventArgs e) {
             Properties.Settings.Default.AutomaticallyReportExceptions = 
                 cbReportErrors.IsChecked == true;
-            Properties.Settings.Default.DownloadAllFiles = 
-                cbDownloadAllFiles.IsChecked == true;
+            if (cbDownloadAllFiles.IsChecked != Properties.Settings.Default.DownloadAllFiles) {
+                Properties.Settings.Default.DownloadAllFiles = cbDownloadAllFiles.IsChecked == true;
+                InitializeDownpatchVersions();
+            }
             Properties.Settings.Default.Save();
-
-            InitializeDownpatchVersions();
         }
     }
 }
