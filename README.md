@@ -1,8 +1,7 @@
+
+
+# ELDEN RING Downpatcher.
 Fork of the Doom Eternal Downpatcher for Elden Ring because better game :).
-
-
-# DOOM Eternal Steam Downpatcher
-A Downpatcher for DOOM Eternal. Steam only.
 
 ![Preview](https://github.com/mcdalcin/DoomEternalDownpatcher/blob/master/Images/mainPreview.PNG?raw=true)
 
