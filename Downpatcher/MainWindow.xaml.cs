@@ -78,6 +78,7 @@ namespace Downpatcher {
             string jsonString;
             try {
                 WebClient webClient = new WebClient();
+                webClient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
                 webClient.Headers.Add("User-Agent: Other");
                 jsonString = webClient.DownloadString(DOWNPATCHER_RELEASE_URL);
             } catch (WebException e) {
@@ -204,6 +205,7 @@ namespace Downpatcher {
             int ddIndex = -1;
             // Look for the depot downloader release matching the specified version.
             using (var webClient = new WebClient()) {
+                webClient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
                 webClient.Headers.Add("User-Agent: Other");
                 string jsonString;
                 try {
@@ -342,6 +344,7 @@ namespace Downpatcher {
          */
         private string[] GetFileList(string versionName) {
             using (var webClient = new WebClient()) {
+                webClient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
                 string files;
                 try {
                     files = webClient.DownloadString(
@@ -362,6 +365,7 @@ namespace Downpatcher {
 
         private Versions InitializeAvailableVersions() {
             using (var webClient = new WebClient()) {
+                webClient.CachePolicy = new System.Net.Cache.RequestCachePolicy(System.Net.Cache.RequestCacheLevel.NoCacheNoStore);
                 string json = "";
                 try {
                     json = webClient.DownloadString(GAME_VERSION_DATA_URL);
