@@ -3,7 +3,7 @@
 # ELDEN RING Downpatcher (steam only)
 Fork of the Doom Eternal Downpatcher for Elden Ring because better game :).
 
-![Preview](https://github.com/mcdalcin/EldenRingDownpatcher/blob/master/Images/mainPreview.png?raw=true)
+![Preview](https://github.com/mcdalcin/EldenRingDownpatcher/blob/master/Images/mainPreview.PNG?raw=true)
 
 
 Made with love from Xiae.
