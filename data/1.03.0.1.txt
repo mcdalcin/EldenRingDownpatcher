@@ -1,0 +1,4 @@
+Data0.bdt
+Data0.bhd
+base.bin
+eldenring.exe
