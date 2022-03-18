@@ -736,9 +736,7 @@ namespace Downpatcher {
                 cbDownloadAllFiles.IsChecked == true;
             Properties.Settings.Default.Save();
 
-            if (cbDownloadAllFiles.IsChecked == true) {
-                InitializeDownpatchVersions();
-            }
+            InitializeDownpatchVersions();
         }
     }
 }

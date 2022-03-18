@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Closing="Window_Closing"
         ResizeMode="CanMinimize"
-        Title="Elden Ring Steam Downpatcher" Height="350" Width="735">
+        Title="ELDEN RING Steam Downpatcher" Height="350" Width="735">
     <Canvas>
         <StackPanel Name="spRootPath" Orientation="Horizontal" Canvas.Left="10" Canvas.Top="10">
             <Border BorderThickness="1" BorderBrush="LightGray">
@@ -90,7 +90,7 @@
         </StackPanel>
         <StackPanel Name="spInProgress" Visibility="Hidden" Orientation="Horizontal" Canvas.Left="238" Canvas.Top="143" Margin="0,1,0,0">
             <fa5:ImageAwesome Icon="Solid_CircleNotch" Spin="True" Height="12" Width="12" Margin="0,0,2,0" />
-            <TextBlock> In progress...</TextBlock>
+            <TextBlock> In progress (This takes a while. Please be patient.)</TextBlock>
         </StackPanel>
         <TextBlock Name="tbRequiredNotification" Foreground="#C44D58" FontWeight="Bold" Canvas.Left="390" Canvas.Top="69">* Required items missing</TextBlock>
         <TextBlock Name="tbUsernameRequired" Foreground="#FF6B6B" FontWeight="Bold" Canvas.Left="236" Canvas.Top="40">*</TextBlock>
