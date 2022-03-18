@@ -1,6 +1,6 @@
 
 
-# ELDEN RING Downpatcher.
+# ELDEN RING Downpatcher (steam only)
 Fork of the Doom Eternal Downpatcher for Elden Ring because better game :).
 
 ![Preview](https://github.com/mcdalcin/DoomEternalDownpatcher/blob/master/Images/mainPreview.PNG?raw=true)
