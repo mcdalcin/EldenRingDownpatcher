@@ -14,8 +14,6 @@ Made with love from Xiae.
 
 Instructions included in the application under the Help link in the top right.
 
-![Instructions](https://github.com/mcdalcin/DoomEternalDownpatcher/blob/master/Images/instructions.PNG?raw=true)
-
 ## BELOW IS FOR DEVELOPERS ONLY
 
 ## ADDING SUPPORT FOR NEW VERSION
