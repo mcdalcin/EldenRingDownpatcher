@@ -31,7 +31,7 @@ namespace Downpatcher {
 
         private const string GAME_EXECUTABLE_STRING = "eldenring.exe";
         private const string GAME_DATA_BASE_URL =
-            "https://raw.githubusercontent.com/mcdalcin/EldenRingEternalDownpatcher"
+            "https://raw.githubusercontent.com/mcdalcin/EldenRingDownpatcher"
                 + "/master/data/";
         private const string GAME_VERSION_DATA_URL =
             GAME_DATA_BASE_URL + "versions.json";
