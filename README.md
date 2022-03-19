@@ -18,7 +18,7 @@ Instructions included in the application under the Help link in the top right.
 
 ## ADDING SUPPORT FOR NEW VERSION
 
-When adding in a new version, two things should be done. Note that the downpatcher will always work if the Download All Files option is selected; however, also note that downloading from steam depots is extremely slow and less files needed is usually better.
+When adding in a new version, two things should be done. **Note that the downpatcher will always work if the Download All Files option is selected; however, also note that downloading from steam depots is extremely slow and less files needed is usually better.**
 
  - Adding in the filelist.
  - Modifying data/versions.json with the manifest and size information.
