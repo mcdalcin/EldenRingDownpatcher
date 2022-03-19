@@ -33,7 +33,7 @@ Rename the filelist.txt created to new_version_name.txt and add it to the data f
 
 ### MODIFY VERSIONS.JSON
 
-**Eventually, this part will be automated, but for now we must do it manually.**
+**Eventually, this part can be automated, but for now we must do it manually.**
 
 Each version will contain a new manifest id for each depot that has changed.
 
@@ -61,24 +61,22 @@ To get the new manifestIds, go to https://steamdb.info/app/1245620/patchnotes/. 
 If done correctly, the versions.json should not contain a new entry for 1.03 as follows:
 
 ```json
-...
-      ]
-    {
-        "name": "1.02.3",
-        "size": "82691400",
-        "manifestIds": [
-            "8390693081119963338",
-            "2484355486124511110"
-        ]
-    },
-    {
-        "name": "1.03",
-        "size": "82774344",
-        "manifestIds": [
-            "4121984677645683704",
-            "1984118169889838981"
-        ]
-    }
+      {
+          "name": "1.02.3",
+          "size": "82691400",
+          "manifestIds": [
+              "8390693081119963338",
+              "2484355486124511110"
+          ]
+      },
+      {
+          "name": "1.03",
+          "size": "82774344",
+          "manifestIds": [
+              "4121984677645683704",
+              "1984118169889838981"
+          ]
+      }
 ```
 ##### UPDATING THE SIZE FOR THE NEW VERSION
 The final thing that will need updating is the size. This is the size of the eldenring.exe executable located in your Steam folder. Right click it, go to properties, and copy and paste the size in bytes (NOT the size on disk).
