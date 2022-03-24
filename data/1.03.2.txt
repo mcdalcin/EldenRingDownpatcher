@@ -1,1 +1,10 @@
-
+Data0.bdt
+Data0.bhd
+Data2.bdt
+Data2.bhd
+base.bin
+regulation.bin
+base.bin
+eldenring.exe
+base.bin
+eldenring.exe
