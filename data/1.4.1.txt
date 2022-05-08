@@ -1,0 +1,9 @@
+install_easyanticheat_eos_setup.bat
+uninstall_easyanticheat_eos_setup.bat
+Data0.bdt
+Data0.bhd
+Data3.bdt
+Data3.bhd
+base.bin
+regulation.bin
+eldenring.exe
